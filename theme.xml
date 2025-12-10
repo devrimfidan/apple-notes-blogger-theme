@@ -66,6 +66,12 @@
      <Variable name="text.color" description="Primary Text" type="color" default="#000000" value="#000000"/>
      <Variable name="text.secondary.color" description="Secondary Text" type="color" default="#737373" value="#737373"/>
     </Group>
+
+    <Group description="Cookie Consent" selector=".cookie-choices-info">
+      <Variable name="cookie.text.color" description="Cookie Text Color" type="color" default="#1d1d1f" value="#1d1d1f"/>
+      <Variable name="cookie.background.color" description="Cookie Background" type="color" default="rgba(255, 255, 255, 0.8)" value="rgba(255, 255, 255, 0.8)"/>
+      <Variable name="cookie.font" description="Cookie Font" type="font" default="500 12px system-ui, -apple-system, sans-serif" value="500 12px system-ui, -apple-system, sans-serif"/>
+    </Group>
     */
     
 
@@ -797,11 +803,9 @@
     display: flex;
 }
 
- 
-
     /* Cookie Consent Customization */
     .cookie-choices-info {
-      background-color: rgba(255, 255, 255, 0.8) !important;
+      background-color: $(cookie.background.color) !important;
       backdrop-filter: blur(20px) !important;
       -webkit-backdrop-filter: blur(20px) !important;
       border-radius: 12px !important;
@@ -839,11 +843,17 @@
     }
 
     .cookie-choices-text {
-      font-size: 13px !important;
+      font: $(cookie.font) !important;
       margin: 0 !important;
-      color: #333 !important;
+      color: $(cookie.text.color) !important;
       line-height: 1.4 !important;
       padding-bottom: 10px !important;
+    }
+    
+    /* Aggressive override for any child elements (spans, divs) inside the cookie info */
+    .cookie-choices-info * {
+      color: $(cookie.text.color) !important;
+      font: $(cookie.font) !important;
     }
 
     .cookie-choices-buttons {
