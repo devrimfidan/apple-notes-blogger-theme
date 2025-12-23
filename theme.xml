@@ -76,7 +76,7 @@
      <Variable name="heading.h5.font" description="Heading 5 Font" type="font" default="600 16px -apple-system, BlinkMacSystemFont, sans-serif" value="600 16px -apple-system, BlinkMacSystemFont, sans-serif"/>
      <Variable name="heading.h6.font" description="Heading 6 Font" type="font" default="600 14px -apple-system, BlinkMacSystemFont, sans-serif" value="600 14px -apple-system, BlinkMacSystemFont, sans-serif"/>
      <Variable name="blockquote.font" description="Blockquote Font" type="font" default="italic 16px -apple-system, BlinkMacSystemFont, sans-serif" value="italic 16px -apple-system, BlinkMacSystemFont, sans-serif"/>
-     <Variable name="monospace.font" description="Code/Monospace Font" type="font" default="normal normal 14px 'SF Mono', Monaco, 'Courier New', monospace" value="normal normal 14px &#39;SF Mono&#39;, Monaco, &#39;Courier New&#39;, monospace"/>
+     <Variable name="monospace.font" description="Code/Monospace Font" type="font" default="normal normal 14px 'SF Mono', Monaco, 'Courier New', monospace" value="normal normal 14px 'SF Mono', Monaco, 'Courier New', monospace"/>
     </Group>
 
     <Group description="Cookie Consent" selector=".cookie-choices-info">
@@ -86,6 +86,59 @@
     </Group>
     */
     
+    /* CSS Variables for Theme Switching */
+    :root {
+      /* Light Mode Colors (Default) */
+      --bg-app: #f2f2f7;
+      --bg-sidebar: #f9f9f9;
+      --bg-content: #ffffff;
+      --bg-notes: #ffffff;
+      --bg-hover: #f5f5f5;
+      --bg-active: #e5e5e5;
+      
+      --text-primary: #000000;
+      --text-secondary: #737373;
+      --text-muted: #a3a3a3;
+      
+      --border-color: #e5e5e5;
+      --border-sidebar: #d1d1d6;
+      --border-hover: #d4d4d4;
+      
+      --accent-yellow: #ffcc00;
+      --accent-yellow-light: #ffe57f;
+    }
+
+    /* Dark Mode Colors */
+    [data-theme="dark"] {
+      --bg-app: #1c1c1e;
+      --bg-sidebar: #2c2c2e;
+      --bg-content: #1c1c1e;
+      --bg-notes: #2c2c2e;
+      --bg-hover: #3a3a3c;
+      --bg-active: #48484a;
+      
+      --text-primary: #ffffff;
+      --text-secondary: #98989d;
+      --text-muted: #636366;
+      
+      --border-color: #38383a;
+      --border-sidebar: #38383a;
+      --border-hover: #48484a;
+      
+      --accent-yellow: #ffd60a;
+      --accent-yellow-light: #ffe047;
+    }
+
+    /* Text Selection Colors */
+    ::selection {
+      background: var(--accent-yellow);
+      color: #000000;
+    }
+    
+    ::-moz-selection {
+      background: var(--accent-yellow);
+      color: #000000;
+    }
 
     * {
       margin: 0;
@@ -97,8 +150,8 @@
       font: $(body.font);
       margin: 0;
       padding: 0;
-      background-color: $(body.background.color);
-      color: $(text.color);
+      background-color: var(--bg-app);
+      color: var(--text-primary);
       height: 100vh;
       overflow: hidden;
     }
@@ -131,8 +184,8 @@
 
     /* Sidebar */
     aside,.sidebar {
-      background: $(body.background.color);
-      border-right: 1px solid $(sidebar.border.color);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-sidebar);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -146,7 +199,7 @@
     .sidebar-header {
       height: 64px;
       padding: 0 12px;
-      border-bottom: 1px solid #d1d1d6;
+      border-bottom: 1px solid var(--border-sidebar);
       display: flex;
       align-items: center;
     }
@@ -169,7 +222,7 @@
       font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: #737373;
+      color: var(--text-secondary);
       padding: 8px 12px;
     }
 
@@ -187,7 +240,7 @@
       padding: 12px 12px 4px;
       font-size: 12px;
       font-weight: 500;
-      color: #737373;
+      color: var(--text-secondary);
     }
 
     .folder-list {
@@ -214,23 +267,23 @@
     }
 
     .folder-item:hover {
-      background: #f5f5f5;
+      background: var(--bg-hover);
     }
 
     /* Sidebar Active States */
     /* Index View: Yellow BG, Black Text */
     .index .folder-item.active {
-      background: #ffcc00;
-      color: #000;
+      background: var(--accent-yellow);
+      color: var(--text-primary);
       font-weight: 600;
     }
     .index .folder-item.active .folder-icon {
-      color: #000;
+      color: var(--text-primary);
     }
 
     /* Item View: Grey BG, Yellow Text/Icon */
     .item .folder-item.active {
-      background: #e5e5e5;
+      background: var(--bg-active);
       color: #f4b400; /* Darker yellow for text legibility, or #ffcc00 if background is light enough */
       font-weight: 600;
     }
@@ -240,7 +293,26 @@
 
     /* Fallback/Base */
     .folder-item.active {
-      background: #e5e5e5;
+      background: var(--bg-active);
+    }
+
+    /* Dark Mode Overrides for Active States */
+    [data-theme="dark"] .index .folder-item.active {
+      background: #3d3d1f; /* Darker yellow/gold background */
+      color: var(--text-primary);
+    }
+    
+    [data-theme="dark"] .index .folder-item.active .folder-icon {
+      color: var(--text-primary);
+    }
+    
+    [data-theme="dark"] .item .folder-item.active {
+      background: var(--bg-active);
+      color: var(--accent-yellow);
+    }
+    
+    [data-theme="dark"] .item .folder-item.active .folder-icon {
+      color: var(--accent-yellow);
     }
 
     .folder-item-left {
@@ -253,7 +325,7 @@
     .folder-icon {
       width: 18px;
       height: 18px;
-      color: #404040;
+      color: var(--text-secondary);
       flex-shrink: 0;
     }
 
@@ -265,7 +337,7 @@
       font-size: 15px;
       font-weight: 500;
       letter-spacing: -0.01em;
-      color: #171717;
+      color: var(--text-primary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -277,7 +349,7 @@
 
     .folder-count {
       font-size: 13px;
-      color: #737373;
+      color: var(--text-secondary);
       font-variant-numeric: tabular-nums;
     }
 
@@ -306,7 +378,7 @@
       border-radius: 6px;
       background: none;
       font-size: 13px;
-      color: #404040;
+      color: var(--text-secondary);
       cursor: pointer;
       transition: all 0.15s;
     }
@@ -348,7 +420,7 @@
     
     .sidebar-footer li:not(:last-child)::after {
       content: "|";
-      color: #9ca3af;
+      color: var(--text-secondary);
       margin-left: 5px;
       font-size: 11px;
     }
@@ -358,7 +430,7 @@
       padding: 0;
       cursor: pointer;
       text-decoration: none;
-      color: #737373;
+      color: var(--text-secondary);
       font-size: 13px;
       transition: color 0.15s;
     }
@@ -366,7 +438,7 @@
     .folder-item-footer:hover {
       background: none;
       text-decoration: underline;
-      color: #404040;
+      color: var(--text-primary);
     }
     
     .folder-item-footer .folder-name {
@@ -383,15 +455,15 @@
     .notes-section {
       display: flex;
       flex-direction: column;
-      border-right: 1px solid #e5e5e5;
-      background: #fff;
+      border-right: 1px solid var(--border-color);
+      background: var(--bg-notes);
       height: 100vh;
-      border-left: 1px solid #e5e5e5;
+      border-left: 1px solid var(--border-color);
       min-height: 0;
     }
 
     .notes-header {
-      background: #fff;
+      background: var(--bg-notes);
       box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08);
     }
 
@@ -412,12 +484,12 @@
       font-size: 17px;
       font-weight: 600;
       letter-spacing: -0.02em;
-      color: #171717;
+      color: var(--text-primary);
     }
 
     .notes-count {
       font-size: 13px;
-      color: rgba(23, 23, 23, 0.9);
+      color: var(--text-primary);
     }
 
     .btn-icon {
@@ -431,15 +503,15 @@
       border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.15s;
-      color: #171717;
+      color: var(--text-primary);
     }
 
     .btn-icon:hover {
-      background: rgba(0, 0, 0, 0.1);
+      background: var(--bg-hover);
     }
 
     .btn-icon:active {
-      background: rgba(0, 0, 0, 0.2);
+      background: var(--bg-active);
     }
 
     .search-wrapper {
@@ -455,7 +527,7 @@
       left: 8px;
       top: 50%;
       transform: translateY(-50%);
-      color: #737373;
+      color: var(--text-secondary);
       width: 18px;
       height: 18px;
       pointer-events: none;
@@ -467,15 +539,15 @@
       padding-left: 32px;
       padding-right: 12px;
       font-size: 14px;
-      border: 1px solid rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-color);
       border-radius: 50px;
-      background: rgba(255, 255, 255, 0.7);
+      background: var(--bg-content);
       outline: none;
       transition: all 0.15s;
     }
 
     .search-input:focus {
-      background: #fff;
+      background: var(--bg-content);
       border: 2px solid $(accent.color);
       box-shadow: 0 0 0 1px $(accent.color);
     }
@@ -483,17 +555,17 @@
     .note-date-centered {
       text-align: center;
       font-size: 13px;
-      color: #8e8e93;
+      color: var(--text-secondary);
       margin-bottom: 8px;
     }
 
     .search-input:focus {
-      background: #fff;
-      border-color: rgba(0, 0, 0, 0.2);
+      background: var(--bg-content);
+      border-color: var(--border-hover);
     }
 
     .search-input::placeholder {
-      color: #737373;
+      color: var(--text-secondary);
     }
 
     .notes-list {
@@ -506,7 +578,7 @@
     .note-item {
       position: relative;
       cursor: pointer;
-      border-bottom: 1px solid #e5e5e5;
+      border-bottom: 1px solid var(--border-color);
       text-decoration: none !important;
     }
 	.note-item-link {
@@ -522,11 +594,11 @@
     }
 
     .note-item:hover .note-item-content {
-      background: #f5f5f5;
+      background: var(--bg-hover);
     }
 
     .note-item.active .note-item-content {
-      background: #e5e5e5;
+      background: var(--bg-active);
     }
 
     /* Note List Active States */
@@ -536,14 +608,25 @@
 
     /* Index View: Gray BG for selected (first) item */
     .index .note-item.active .note-item-content {
-      background: #d1d1d6; /* Light darker grey */
-      color: #000;
+      background: var(--bg-active);
+      color: var(--text-primary);
     }
 
     /* Item View: Yellow BG for selected (current) item */
     .item .note-item.active .note-item-content {
       background: $(accent.light.color); /* Lighter yellow */
       color: $(text.color);
+    }
+
+    /* Dark Mode Overrides for Note Active States */
+    [data-theme="dark"] .index .note-item.active .note-item-content {
+      background: #3d3d1f; /* Darker yellow/gold background matching Apple Notes */
+      color: var(--text-primary);
+    }
+    
+    [data-theme="dark"] .item .note-item.active .note-item-content {
+      background: #4a4a2a; /* Dark yellow/gold background */
+      color: var(--text-primary);
     }
 
     .note-header {
@@ -558,7 +641,7 @@
       font-size: 16px;
       font-weight: 600;
       letter-spacing: -0.01em;
-      color: #171717;
+      color: var(--text-primary);
       white-space: nowrap !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
@@ -577,7 +660,7 @@
     .note-preview {
       font-size: 13px;
       line-height: 1.4;
-      color: #404040;
+      color: var(--text-secondary);
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -588,7 +671,7 @@
     .editor-section {
       display: flex;
       flex-direction: column;
-      background: $(content.background.color);
+      background: var(--bg-content);
       height: 100vh;
       min-height: 0;
     }
@@ -599,7 +682,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #e5e5e5;
+      border-bottom: 1px solid var(--border-color);
     }
 
     .toolbar-left,
@@ -611,7 +694,7 @@
 
     .editor-time {
       font-size: 13px;
-      color: #737373;
+      color: var(--text-secondary);
     }
 
     .editor-content {
@@ -629,7 +712,7 @@
       width: 100%;
       font: $(title.font);
       letter-spacing: -0.02em;
-      color: #171717;
+      color: var(--text-primary);
       border: none;
       outline: none;
       background: transparent;
@@ -639,14 +722,14 @@
 
     .editor-meta {
       font-size: 13px;
-      color: #737373;
+      color: var(--text-secondary);
       margin-bottom: 20px;
     }
 
     .editor-body {
       font-size: 16px;
       line-height: 1.6;
-      color: #171717;
+      color: var(--text-primary);
     }
 
     .editor-body p {
@@ -661,7 +744,7 @@
     .editor-body h1 {
       font: $(title.font);
       letter-spacing: -0.02em;
-      color: #171717;
+      color: var(--text-primary);
       line-height: 1.2;
       margin-top: 24px;
       margin-bottom: 12px;
@@ -670,7 +753,7 @@
     .editor-body h2 {
       font: $(heading.h2.font);
       letter-spacing: -0.02em;
-      color: #171717;
+      color: var(--text-primary);
       line-height: 1.3;
       margin-top: 20px;
       margin-bottom: 10px;
@@ -679,7 +762,7 @@
     .editor-body h3 {
       font: $(heading.h3.font);
       letter-spacing: -0.01em;
-      color: #171717;
+      color: var(--text-primary);
       line-height: 1.3;
       margin-top: 18px;
       margin-bottom: 8px;
@@ -688,7 +771,7 @@
     .editor-body h4 {
       font: $(heading.h4.font);
       letter-spacing: -0.01em;
-      color: #171717;
+      color: var(--text-primary);
       line-height: 1.4;
       margin-top: 16px;
       margin-bottom: 8px;
@@ -697,7 +780,7 @@
     .editor-body h5 {
       font: $(heading.h5.font);
       letter-spacing: -0.01em;
-      color: #171717;
+      color: var(--text-primary);
       line-height: 1.4;
       margin-top: 14px;
       margin-bottom: 6px;
@@ -706,16 +789,30 @@
     .editor-body h6 {
       font: $(heading.h6.font);
       letter-spacing: -0.01em;
-      color: #404040;
+      color: var(--text-secondary);
       line-height: 1.4;
       margin-top: 12px;
       margin-bottom: 6px;
     }
 
+    /* Text Highlight Class */
+    .editor-body .highlight,
+    .editor-body span.highlight {
+      background-color: #fff2cc;
+      color: #000000;
+      padding: 2px 0;
+    }
+    
+    [data-theme="dark"] .editor-body .highlight,
+    [data-theme="dark"] .editor-body span.highlight {
+      background-color: #665c33;
+      color: #ffffff;
+    }
+
     /* Blockquote Styles */
     .editor-body blockquote {
       font: $(blockquote.font);
-      color: #404040;
+      color: var(--text-secondary);
       border-left: 4px solid $(accent.color);
       padding: 12px 16px;
       margin: 16px 0;
@@ -731,6 +828,52 @@
       margin-bottom: 0;
     }
 
+    /* Table Styles */
+    .editor-body table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+    }
+    
+    .editor-body table thead tr {
+      background-color: #f2f2f2;
+      text-align: left;
+    }
+    
+    .editor-body table th {
+      padding: 12px;
+      border: 1px solid #ddd;
+      font-weight: 600;
+      color: #000000;
+    }
+    
+    .editor-body table td {
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+    
+    .editor-body table tbody tr:nth-child(even) {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+    
+    /* Dark Mode Table Styles */
+    [data-theme="dark"] .editor-body table thead tr {
+      background-color: #3a3a3c;
+    }
+    
+    [data-theme="dark"] .editor-body table th {
+      border: 1px solid #48484a;
+      color: #ffffff;
+    }
+    
+    [data-theme="dark"] .editor-body table td {
+      border: 1px solid #48484a;
+    }
+    
+    [data-theme="dark"] .editor-body table tbody tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
     /* Code and Monospace Styles */
     .editor-body code {
       font: $(monospace.font);
@@ -738,7 +881,7 @@
       padding: 0;
       margin: 0;
       border-radius: 0;
-      color: #171717;
+      color: var(--text-primary);
     }
 
     .editor-body pre {
@@ -786,21 +929,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid #e5e5e5;
+      border: 1px solid var(--border-color);
       border-radius: 6px;
       background: none;
       cursor: pointer;
-      color: #404040;
+      color: var(--text-secondary);
       transition: all 0.15s;
     }
 
     .btn-toolbar:hover {
-      border-color: #d4d4d4;
-      background: #f5f5f5;
+      border-color: var(--border-hover);
+      background: var(--bg-hover);
     }
 
     .btn-toolbar:active {
-      background: #e5e5e5;
+      background: var(--bg-active);
     }
 
     .btn-more {
@@ -813,7 +956,7 @@
       border-radius: 6px;
       background: none;
       cursor: pointer;
-      color: #404040;
+      color: var(--text-secondary);
       font-size: 13px;
       transition: all 0.15s;
     }
@@ -911,7 +1054,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #a3a3a3;
+      color: var(--text-muted);
       font-size: 15px;
     }
     
@@ -1489,6 +1632,22 @@
                           <path d='M12 2v14'/>
                         </svg>
                       </button>
+                      <button class='btn-icon' onclick='toggleDarkMode()' title='Toggle Dark Mode' id='darkModeToggle'>
+                        <svg class='icon moon-icon' viewBox='0 0 24 24'>
+                          <path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'/>
+                        </svg>
+                        <svg class='icon sun-icon' viewBox='0 0 24 24' style='display: none;'>
+                          <circle cx='12' cy='12' r='5'/>
+                          <line x1='12' y1='1' x2='12' y2='3'/>
+                          <line x1='12' y1='21' x2='12' y2='23'/>
+                          <line x1='4.22' y1='4.22' x2='5.64' y2='5.64'/>
+                          <line x1='18.36' y1='18.36' x2='19.78' y2='19.78'/>
+                          <line x1='1' y1='12' x2='3' y2='12'/>
+                          <line x1='21' y1='12' x2='23' y2='12'/>
+                          <line x1='4.22' y1='19.78' x2='5.64' y2='18.36'/>
+                          <line x1='18.36' y1='5.64' x2='19.78' y2='4.22'/>
+                        </svg>
+                      </button>
                       <div class='search-wrapper' style='width: 200px;'>
                         <form expr:action='data:blog.homepageUrl + &quot;search&quot;' method='get'>
                           <div class='search-container'>
@@ -1533,6 +1692,22 @@
                         <path d='M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7'/>
                         <path d='M16 6l-4-4-4 4'/>
                         <path d='M12 2v14'/>
+                      </svg>
+                    </button>
+                    <button class='btn-icon' onclick='toggleDarkMode()' title='Toggle Dark Mode'>
+                      <svg class='icon moon-icon' viewBox='0 0 24 24'>
+                        <path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'/>
+                      </svg>
+                      <svg class='icon sun-icon' viewBox='0 0 24 24' style='display: none;'>
+                        <circle cx='12' cy='12' r='5'/>
+                        <line x1='12' y1='1' x2='12' y2='3'/>
+                        <line x1='12' y1='21' x2='12' y2='23'/>
+                        <line x1='4.22' y1='4.22' x2='5.64' y2='5.64'/>
+                        <line x1='18.36' y1='18.36' x2='19.78' y2='19.78'/>
+                        <line x1='1' y1='12' x2='3' y2='12'/>
+                        <line x1='21' y1='12' x2='23' y2='12'/>
+                        <line x1='4.22' y1='19.78' x2='5.64' y2='18.36'/>
+                        <line x1='18.36' y1='5.64' x2='19.78' y2='4.22'/>
                       </svg>
                     </button>
                     <div class='search-wrapper' style='width: 200px;'>
@@ -1594,6 +1769,22 @@
                           <path d='M12 2v14'/>
                         </svg>
                       </button>
+                      <button class='btn-icon' onclick='toggleDarkMode()' title='Toggle Dark Mode'>
+                        <svg class='icon moon-icon' viewBox='0 0 24 24'>
+                          <path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'/>
+                        </svg>
+                        <svg class='icon sun-icon' viewBox='0 0 24 24' style='display: none;'>
+                          <circle cx='12' cy='12' r='5'/>
+                          <line x1='12' y1='1' x2='12' y2='3'/>
+                          <line x1='12' y1='21' x2='12' y2='23'/>
+                          <line x1='4.22' y1='4.22' x2='5.64' y2='5.64'/>
+                          <line x1='18.36' y1='18.36' x2='19.78' y2='19.78'/>
+                          <line x1='1' y1='12' x2='3' y2='12'/>
+                          <line x1='21' y1='12' x2='23' y2='12'/>
+                          <line x1='4.22' y1='19.78' x2='5.64' y2='18.36'/>
+                          <line x1='18.36' y1='5.64' x2='19.78' y2='4.22'/>
+                        </svg>
+                      </button>
                       <div class='search-wrapper' style='width: 200px;'>
                         <form expr:action='data:blog.homepageUrl + &quot;search&quot;' method='get'>
                           <div class='search-container'>
@@ -1638,6 +1829,22 @@
                         <path d='M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7'/>
                         <path d='M16 6l-4-4-4 4'/>
                         <path d='M12 2v14'/>
+                      </svg>
+                    </button>
+                    <button class='btn-icon' onclick='toggleDarkMode()' title='Toggle Dark Mode'>
+                      <svg class='icon moon-icon' viewBox='0 0 24 24'>
+                        <path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'/>
+                      </svg>
+                      <svg class='icon sun-icon' viewBox='0 0 24 24' style='display: none;'>
+                        <circle cx='12' cy='12' r='5'/>
+                        <line x1='12' y1='1' x2='12' y2='3'/>
+                        <line x1='12' y1='21' x2='12' y2='23'/>
+                        <line x1='4.22' y1='4.22' x2='5.64' y2='5.64'/>
+                        <line x1='18.36' y1='18.36' x2='19.78' y2='19.78'/>
+                        <line x1='1' y1='12' x2='3' y2='12'/>
+                        <line x1='21' y1='12' x2='23' y2='12'/>
+                        <line x1='4.22' y1='19.78' x2='5.64' y2='18.36'/>
+                        <line x1='18.36' y1='5.64' x2='19.78' y2='4.22'/>
                       </svg>
                     </button>
                     <div class='search-wrapper' style='width: 200px;'>
@@ -2563,6 +2770,55 @@
       close: &quot;Okay!&quot;,
       learn: &quot;Learn More&quot;
     };
+  </script>
+  
+  <!-- Dark Mode Toggle Script -->
+  <script type='text/javascript'>
+    //<![CDATA[
+    // Initialize dark mode on page load
+    function initDarkMode() {
+      const savedTheme = localStorage.getItem('theme');
+      const htmlElement = document.documentElement;
+      
+      if (savedTheme === 'dark') {
+        htmlElement.setAttribute('data-theme', 'dark');
+        updateDarkModeIcons(true);
+      }
+    }
+    
+    // Toggle dark mode
+    function toggleDarkMode() {
+      const htmlElement = document.documentElement;
+      const currentTheme = htmlElement.getAttribute('data-theme');
+      
+      if (currentTheme === 'dark') {
+        htmlElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        updateDarkModeIcons(false);
+      } else {
+        htmlElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        updateDarkModeIcons(true);
+      }
+    }
+    
+    // Update icon visibility
+    function updateDarkModeIcons(isDark) {
+      const moonIcons = document.querySelectorAll('.moon-icon');
+      const sunIcons = document.querySelectorAll('.sun-icon');
+      
+      moonIcons.forEach(icon => {
+        icon.style.display = isDark ? 'none' : 'block';
+      });
+      
+      sunIcons.forEach(icon => {
+        icon.style.display = isDark ? 'block' : 'none';
+      });
+    }
+    
+    // Run on page load
+    initDarkMode();
+    //]]>
   </script>
 </body>
 
