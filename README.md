@@ -105,12 +105,7 @@ We would love to hear your thoughts!
 - Do you encounter any layout bugs?
 - How can we make the writing experience better?
 
-## 👨‍💻 Created By
-
-**Emin Fidan**
-
 ---
-
 
 ## Credits
 Based on the original [Apple Notes Blogger Theme](https://github.com/muddassirhq/apple-notes-blogger-theme) by Muddassir Hussain.
